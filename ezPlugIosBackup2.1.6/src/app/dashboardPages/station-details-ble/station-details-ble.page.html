@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="!routedFromNearby" defaultHref="/app/dashboard"></ion-back-button>
+      <ion-back-button *ngIf="routedFromNearby" routerLink="/app/search-near-by"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ready to Charge</ion-title>
+  </ion-toolbar>
+</ion-header>  
+
+<ion-content class="ion-padding-start ion-padding-end" *ngIf="stationDetails.hasError == false">
+
+  <!-- <ion-row *ngIf="minimumBalance?.isMinimumWalletBalanceMaintained == false">
+    <ion-col size="8" style="line-height: 3;"><p style="color: #e53935;">Low balance!</p></ion-col>
+    <ion-col size="4" class="ion-text-right"><ion-button (click)="showWalletModal()" fill="clear" >Load</ion-button></ion-col>
+  </ion-row> -->
+
+  <ion-row > 
+
+    <ion-col size="12">
+      <ion-item class="item-40px">
+        <div style="display: flex; flex-direction: column;">
+          <ion-text color="primary" style="font-size: 20px; font-weight: 500;">{{stationDetails.siteName}}</ion-text>
+          <ion-text class="text-muted" style="font-weight: 450;" color="primary">{{stationDetailsStorage.stationName}}</ion-text>
+        </div>
+        <ion-label style="text-align: right;" (click)="markAsFavourite()"> 
+            <ion-icon fill="#e53935" [name]="stationDetails?.isMarkedAsFavourite ? 'heart' : 'heart-outline'" [style.color]="'#e53935'" style="font-size: 28px;"></ion-icon>
+        </ion-label>
+
+      </ion-item>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-label class="text-muted">{{stationDetails.address}}</ion-label>
+        </ion-col>
+        
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <span class="text-muted" style="line-height: 2.5;" *ngIf="!stationDetails.isAvailable247">{{stationDetails.startTime | date:'shortTime' }} -
+            {{ stationDetails.endTime | date:'shortTime'}}</span>
+          <span class="text-muted" style="line-height: 2.5;" *ngIf="stationDetails.isAvailable247">Open 24/7</span>
+        </ion-col>
+        <ion-col size="6" class="ion-text-right">
+          <div class="text-muted" style="line-height: 2.5;" (click)="callStation(stationDetails.contact)">
+            <span >
+              <ion-icon style="margin-right:5px" name="call" color="primary"></ion-icon>
+              {{stationDetails.contact}}
+            </span>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+
+        <ion-col size="7">
+          <div style="display: flex; flex-direction: row;">
+
+            <ion-chip color="primary">
+              <ion-label>{{stationDetails?.isPublic ? 'Public' : 'Private' }}</ion-label>
+            </ion-chip>
+            <ion-chip color="primary">
+              <ion-label>{{stationDetails.isAvailable ? 'Open' : 'Closed'}}</ion-label>
+            </ion-chip>
+          </div>
+        </ion-col>
+        <ion-col size="5" class="ion-text-right">
+          <ion-chip [ngStyle]="{'background-color': stationDetails.isConnectedToIoTHub ? (stationDetails.isAvailable ? 'lightgreen' : 'lightgray') : 'lightred' }" >
+            <ion-label>{{stationDetails.isConnectedToIoTHub ?  (stationDetails.isAvailable ? stationDetails.stationStatus : stationDetails.stationStatus ) : 'Offline'}}</ion-label>
+         </ion-chip>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="height: auto !important;">
+        <ion-col size="12">
+          <span style="font-size: 14px; font-weight: 500; letter-spacing: 0.2px; color: var(--ion-color-primary-tint);">Price</span>
+          <span style="float: right; font-size: 14px;"> ₹ {{stationDetails.pricingDetails}}/unit</span>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-col>
+<!-- 
+    <ion-row>
+      <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+        <ion-button class="animateButton" (click)="boxSteps('charge')" shape="outline" expand="full">PROCEED </ion-button>
+      </ion-col>
+    </ion-row> -->
+
+  </ion-row>
+
+</ion-content>
+
+<!-- <ion-footer *ngIf="stationDetails?.isConnectedToIoTHub"> -->
+<ion-footer>
+  <ion-button class="animateButton" (click)="proceed()" shape="outline" expand="full">PROCEED </ion-button>
+</ion-footer>

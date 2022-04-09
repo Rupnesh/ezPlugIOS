@@ -1,0 +1,6 @@
+{
+	"appId": "com.ztric.eZPlug",
+	"appName": "ztricEZPlug",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

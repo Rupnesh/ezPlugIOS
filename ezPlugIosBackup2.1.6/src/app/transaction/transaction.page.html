@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon name="grid-outline"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      My Transactions
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openFilterOptions($event)"><ion-icon name="funnel-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  
+  <!-- <ion-item lines="none" color="primary">
+    <span style="padding-top: 1rem; display: flex; place-items: center;"> 
+      <ion-checkbox [(ngModel)]="showAll" (ionChange)="!showAll"></ion-checkbox>
+      <ion-label >Show All</ion-label>
+    </span>
+  </ion-item> -->
+
+  <ion-list *ngIf="showAll">
+    <ion-item *ngFor="let transaction of userTransactions">
+      <ion-label color="primary" >
+        <h2 style="font-weight: 500;">{{transaction.siteName}}</h2>
+        <p><span>Units Consumed </span>{{formatter(transaction.unitsConsumed)}}</p>
+        <p>{{dateFormatter(transaction.transactionStartTime) }}</p>
+        <!-- <p>{{transaction.transactionStartTime |date : 'dd MMM, yyyy HH:mm': 'UTC' }}</p> -->
+      </ion-label>
+      <ion-label color="primary"  slot="end" color="primary" style="text-align: right;">
+        <p style="font-size: 24px; font-weight: 500;"><span>&#8377;</span> {{formatter(transaction.transactionAmount)}}</p>
+        <p>{{transaction.paymentMode == null ? 'NA' : transaction.paymentMode }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-label class="ion-padding" style="margin-top: 1rem;" color="primary" *ngIf="!userTransactions.length">No transactions</ion-label>
+  </ion-list>
+
+  <div *ngIf="!showAll">
+
+    <ion-list *ngFor="let item of lastThreeMonths" style="margin-bottom: 1rem; padding-top: 0 !important;">
+      <ion-list-header color="primary">
+        {{getListHeader(item)}}
+      </ion-list-header>
+
+      <ion-item *ngFor="let transaction of overallData[item]">
+        <ion-label color="primary" >
+          <h2 style="font-weight: 500;">{{transaction.siteName}}</h2>
+          <p><span>Units Consumed </span>{{formatter(transaction.unitsConsumed)}}</p>
+          <p>{{dateFormatter(transaction.transactionStartTime) }}</p>
+        </ion-label>
+        <ion-label color="primary"  slot="end" color="primary" style="text-align: right;">
+          <p style="font-size: 24px; font-weight: 500;"><span>&#8377;</span> {{formatter(transaction.transactionAmount)}}</p>
+          <p>{{transaction.paymentMode == null ? 'NA' : transaction.paymentMode }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-label class="ion-padding" style="margin-top: 1rem;" color="primary" *ngIf="!overallData[item].length">No transactions</ion-label>
+    
+    </ion-list>
+
+    <!-- <ion-list>
+      <ion-list-header color="primary">
+        This month
+      </ion-list-header>
+
+      <ion-item *ngFor="let transaction of currentMonthTransactions">
+        <ion-label color="primary" >
+          <h2 style="font-weight: 500;">{{transaction.siteName}}</h2>
+          <p><span>Units Consumed </span>{{formatter(transaction.unitsConsumed)}}</p>
+          <p>{{dateFormatter(transaction.transactionStartTime) }}</p>
+        </ion-label>
+        <ion-label color="primary"  slot="end" color="primary" style="text-align: right;">
+          <p style="font-size: 24px; font-weight: 500;"><span>&#8377;</span> {{formatter(transaction.transactionAmount)}}</p>
+          <p>{{transaction.paymentMode == null ? 'NA' : transaction.paymentMode }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-label class="ion-padding" color="primary" *ngIf="!currentMonthTransactions.length">No transactions</ion-label>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header color="primary">
+        {{lastMonthName}}
+      </ion-list-header>
+
+      <ion-item *ngFor="let transaction of lastMonthTransactions">
+        <ion-label color="primary">
+          <h2 style="font-weight: 500;">{{transaction.siteName}}</h2>
+          <p><span>Units Consumed </span>{{formatter(transaction.unitsConsumed)}}</p> 
+          <p>{{dateFormatter(transaction.transactionStartTime) }}</p>
+        </ion-label>
+        <ion-label color="primary" slot="end" style="text-align: right;">
+          <p style="font-size: 24px; font-weight: 500;"><span>&#8377;</span> {{formatter(transaction.transactionAmount)}}</p>
+          <p>{{transaction.paymentMode == null ? 'NA' : transaction.paymentMode }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-label class="ion-padding" color="primary" *ngIf="!lastMonthTransactions.length">No transactions</ion-label>
+    </ion-list>
+    <ion-list>
+      <ion-list-header color="primary">
+        {{lastToLastMonthName}}
+      </ion-list-header>
+
+      <ion-item *ngFor="let transaction of lastToLastMonthTransactions">
+        <ion-label color="primary">
+          <h2 style="font-weight: 500;">{{transaction.siteName}}</h2>
+          <p><span>Units Consumed </span>{{formatter(transaction.unitsConsumed)}}</p>
+          <p>{{dateFormatter(transaction.transactionStartTime) }}</p>
+        </ion-label>
+        <ion-label color="primary" slot="end" style="text-align: right;">
+          <p style="font-size: 24px; font-weight: 500;"><span>&#8377;</span> {{formatter(transaction.transactionAmount)}}</p>
+          <p>{{transaction.paymentMode == null ? 'NA' : transaction.paymentMode }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-label class="ion-padding" color="primary" *ngIf="!lastToLastMonthTransactions.length">No transactions</ion-label>
+    </ion-list> -->
+    
+  </div>
+
+
+</ion-content>
