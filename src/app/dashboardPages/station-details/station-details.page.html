@@ -10,7 +10,7 @@
 
 <ion-content class="ion-padding-start ion-padding-end" *ngIf="stationDetails.hasError == false">
 
-  <ion-row *ngIf="minimumBalance?.isMinimumWalletBalanceMaintained == true">
+  <ion-row *ngIf="minimumBalance?.isMinimumWalletBalanceMaintained == false">
     <ion-col size="8" style="line-height: 3;"><p style="color: #e53935;">Low balance!</p></ion-col>
     <ion-col size="4" class="ion-text-right"><ion-button (click)="showWalletModal()" size="small" fill="outline" >Load</ion-button></ion-col>
   </ion-row>
